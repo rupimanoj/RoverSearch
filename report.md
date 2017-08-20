@@ -95,4 +95,28 @@ data.worldmap[y_world_obstacle, x_world_obstacle, 0] += 1
 
 <b>Note</b>: With above cumulative addition approach, elements may overflow from 255 and reset to 0.one way to avoid this is instead of cumulative addition set absolute value of 255.
 
- 
+### Perception step
+
+Perception step is just the combination of all the above code explained. Masks for rock samples, navigable terrain and obstacles were found and world map is updated accordingly. Additionaly we have an vision image, which updates for each frame. Vision image depicts the current image seen by the rover. <br/>
+
+One additional thing that is implemented in perception step is world map is updated only when the roll and pitch of rover are close to zero. This improves the fidelity of the mapped region. <br/>
+
+``` python
+update = True #update only if pitch and roll are close to zero
+if((Rover.pitch > 0.5 and Rover.pitch < 359.5) or (Rover.roll > 0.5 and Rover.roll < 359.5)):
+	update = False
+```
+
+Navigable terrain pixels w.r.t rover coordinates are converted into polar coordinates and updated in Rover state variable. Obtained polar angles are used in decision step to determine the steering angle. <br/>
+
+``` python
+dist , angles = to_polar_coords(x_rover_path, y_rover_path)
+Rover.nav_dists = dist 
+Rover.nav_angles = angles
+```
+
+### Decision step
+
+There were not many changes required on decision step function. Default implementation given as part of project artifacts would be suffice.
+By default steering angles were capped to -15 on lower exterme and 15 to higher exterme. This is changed to -20 and 20.
+One more deviation from default implementation is made to make rover follow along the wall. For steering angle, an offset of +10 is added after obtaining mean steering angle. This make rover to follow along the left wall and increases the probability of finding rock samples.
