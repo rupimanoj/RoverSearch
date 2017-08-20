@@ -97,7 +97,7 @@ data.worldmap[y_world_sample,x_world_sample,:] += 10
 data.worldmap[y_world_obstacle, x_world_obstacle, 0] += 1
 ```
 
-<b>Note</b>: With above cumulative addition approach, elements may overflow from 255 and reset to 0.one way to avoid this is instead of cumulative addition set absolute value of 255.
+<b>Note</b>: With above cumulative addition approach, elements may overflow from 255 and reset to 0.one way to avoid this is instead of cumulative addition set absolute value of 255.<br/>
 ![Training output][training_video]
 
 ### Perception step
