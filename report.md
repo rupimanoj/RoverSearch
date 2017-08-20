@@ -1,6 +1,8 @@
 [//]: # (Image References)
 [perception_step_code]: ./code/perception.py
 [decision_step_code]: ./code/decision.py
+[training_video]: ./output/test_mapping.mp4
+[auto_mode_video]: ./output/rover_autonomous.webm
 
 ### Rock samples detection
 
@@ -96,6 +98,7 @@ data.worldmap[y_world_obstacle, x_world_obstacle, 0] += 1
 ```
 
 <b>Note</b>: With above cumulative addition approach, elements may overflow from 255 and reset to 0.one way to avoid this is instead of cumulative addition set absolute value of 255.
+![Training output][training_video]
 
 ### Perception step
 
@@ -137,6 +140,8 @@ One more deviation from default implementation is made to make rover follow alon
 ### Drive rover
 
 In Autonomous mode, after many trial runs on average rover is able to map about 45 percentage of map with fidelity around 85 percentage. All the rock samples that were part of mapped area were getting detected.
+
+![Autonomous video][auto_mode_video]
 
 ### Incomplete Work and Improvements
 
