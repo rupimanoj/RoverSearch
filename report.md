@@ -77,12 +77,12 @@ else:
 
 ``` python
 #converting into world coordinates
-x_world_path, y_world_path = pix_to_world(x_rover_path, y_rover_path, 
-                                          rover_xpos, rover_ypos, rover_yaw, 200, 10)
-x_world_sample, y_world_sample = pix_to_world(x_rover_sample, y_rover_sample, 
-                                              rover_xpos, rover_ypos, rover_yaw, 200, 10)
-x_world_obstacle, y_world_obstacle = pix_to_world(x_rover_obstacle, y_rover_obstacle, 
-                                                  rover_xpos, rover_ypos, rover_yaw, 200, 10)											  
+x_world_path, y_world_path = pix_to_world(x_rover_path, y_rover_path,
+                                rover_xpos, rover_ypos, rover_yaw, 200, 10)
+x_world_sample, y_world_sample = pix_to_world(x_rover_sample, y_rover_sample,
+                                rover_xpos, rover_ypos, rover_yaw, 200, 10)
+x_world_obstacle, y_world_obstacle = pix_to_world(x_rover_obstacle, y_rover_obstacle,
+                                          rover_xpos, rover_ypos, rover_yaw, 200, 10)											  
 ```
 
 Once pixel positions are obtained w.r.t. world map, respective channels are updated in `data.worldmap`. Red channel is used for obstacles. Blue is used for navigable terrain. Rock samples are updated with white color.
@@ -94,4 +94,5 @@ data.worldmap[y_world_obstacle, x_world_obstacle, 0] += 1
 ```
 
 <b>Note</b>: With above cumulative addition approach, elements may overflow from 255 and reset to 0.one way to avoid this is instead of cumulative addition set absolute value of 255.
+
  
