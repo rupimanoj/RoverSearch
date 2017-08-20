@@ -1,4 +1,6 @@
 [//]: # (Image References)
+[perception_step_code]: ./code/perception.py
+[decision_step_code]: ./code/decision.py
 
 ### Rock samples detection
 
@@ -99,6 +101,13 @@ data.worldmap[y_world_obstacle, x_world_obstacle, 0] += 1
 
 Perception step is just the combination of all the above code explained. Masks for rock samples, navigable terrain and obstacles were found and world map is updated accordingly. Additionaly we have an vision image, which updates for each frame. Vision image depicts the current image seen by the rover. <br/>
 
+``` python
+Rover.vision_image[:,:,:] = 0
+Rover.vision_image[ypos_obstacle,xpos_obstacle,0] = 255 
+Rover.vision_image[ypos_path,xpos_path,2] = 255 
+Rover.vision_image[ypos_sample,xpos_sample,1] = 255
+```
+
 One additional thing that is implemented in perception step is world map is updated only when the roll and pitch of rover are close to zero. This improves the fidelity of the mapped region. <br/>
 
 ``` python
@@ -115,8 +124,22 @@ Rover.nav_dists = dist
 Rover.nav_angles = angles
 ```
 
+![perception step code][perception_step_code]
+
 ### Decision step
 
-There were not many changes required on decision step function. Default implementation given as part of project artifacts would be suffice.
-By default steering angles were capped to -15 on lower exterme and 15 to higher exterme. This is changed to -20 and 20.
+There were not many changes required on decision step function. Default implementation given as part of project artifacts would be suffice. <br/>
+By default steering angles were capped to -15 on lower exterme and 15 to higher exterme. This is changed to -20 and 20. <br/>
 One more deviation from default implementation is made to make rover follow along the wall. For steering angle, an offset of +10 is added after obtaining mean steering angle. This make rover to follow along the left wall and increases the probability of finding rock samples.
+
+![decision step code][decision_step_code]
+
+### Drive rover
+
+In Autonomous mode, after many trial runs on average rover is able to map about 45 percentage of map with fidelity around 85 percentage. All the rock samples that were part of mapped area were getting detected.
+
+### Incomplete Work and Improvements
+
+* Explore unmapped areas. Right now rover is unable to map entire area even with wall following technique. Rover is continuously exploring already mapped areas.
+* Pick rock samples. Even though rock samples are getting detected, these is no code implemented to pick rocks.
+* If rover goes into stuck state, no recovery techniques were used.
